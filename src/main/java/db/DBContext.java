@@ -22,7 +22,7 @@ public class DBContext {
     private Connection conn;
 
     // Database connection string (change according to your DB config)
-    private final String DB_URL = "jdbc:sqlserver://127.0.0.1:1433;databaseName=HospitalDB3;encrypt=false";
+    private final String DB_URL = "jdbc:sqlserver://127.0.0.1:1433;databaseName=HospitalDB_v2;encrypt=false";
     private final String DB_USER = "sa";         // DB username
     private final String DB_PWD = "123456";      // DB password
 

@@ -63,7 +63,7 @@
         <li>
             <a href="manageDisease"
                class="<%= currentPage.contains("manageDisease") ? "active" : ""%>">
-               Quản lý loại bệnh
+               Quản lý tên bệnh
             </a>
         </li>
         <li>
