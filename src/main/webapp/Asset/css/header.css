@@ -1,0 +1,28 @@
+ body {
+                background-color: #eaf4f3;
+                font-family: Arial, sans-serif;
+            }
+            .content {
+                margin-left: 230px;
+                margin-top: 80px;
+                padding: 20px;
+            }
+            .card {
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            }
+            .table td, .table th {
+                vertical-align: middle;
+                text-align: center;
+            }
+            .action-buttons {
+                display: flex;
+                gap: 6px;
+                justify-content: center;
+            }
+            form.d-flex input[type="text"] {
+                flex: 1;
+            }
+            form.d-flex button, form.d-flex a {
+                white-space: nowrap;
+            }

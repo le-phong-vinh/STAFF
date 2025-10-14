@@ -1,0 +1,43 @@
+/*
+    Created on : Oct 10, 2025, 12:58:14 PM
+    Author     : Ho Gia Bao - CE191304
+*/
+
+/* === Màu chủ đạo giống header === */
+:root {
+  --nav-bg: #2E3A4F; /* màu nền header */
+}
+
+/* === Sticky footer layout === */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1; /* phần nội dung chiếm không gian còn lại, đẩy footer xuống đáy */
+}
+
+/* === Footer style === */
+footer.footer {
+  width: 100%;
+  background-color: var(--nav-bg);
+  color: #fff;
+  text-align: center;
+  padding: 0.8rem 0;
+  font-size: 0.95rem;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+footer.footer p {
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+footer.footer i {
+  margin-right: 6px;
+}
