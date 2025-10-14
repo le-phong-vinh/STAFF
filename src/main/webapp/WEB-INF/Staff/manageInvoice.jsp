@@ -25,7 +25,7 @@
         }
         .content {
             margin-left: 230px;
-            margin-top: 20px;
+            /*margin-top: 20px;*/
             padding: 20px;
         }
         .card {
@@ -111,8 +111,9 @@
                                 </td>
                                 <td>
                                     <div class="action-buttons">
+                                        <!-- 👁 Xem hóa đơn (gọi servlet rồi mở modal tự động) -->
                                         <a href="manageInvoice?action=detail&invoiceId=<%= inv.getInvoiceId() %>"
-                                           class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#invoiceDetailModal">
+                                           class="btn btn-info btn-sm">
                                             👁 Xem
                                         </a>
                                     </div>
@@ -257,6 +258,12 @@
             }
             document.getElementById('paymentForm').submit();
         }
+
+        // 🧾 Tự động mở modal chi tiết nếu servlet đã trả về selectedInvoice
+        <% if (selectedInvoice != null) { %>
+            const detailModal = new bootstrap.Modal(document.getElementById('invoiceDetailModal'));
+            detailModal.show();
+        <% } %>
     </script>
 </body>
 </html>

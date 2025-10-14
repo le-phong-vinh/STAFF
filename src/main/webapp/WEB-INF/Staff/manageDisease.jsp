@@ -23,7 +23,7 @@
         }
         .content {
             margin-left: 230px;
-            margin-top: 20px;
+            /*margin-top: 20px;*/
             padding: 20px;
         }
         .card {
