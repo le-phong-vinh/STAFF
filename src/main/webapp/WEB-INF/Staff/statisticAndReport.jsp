@@ -16,6 +16,9 @@
     <meta charset="UTF-8">
     <title>Thống kê & Báo cáo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- ✅ Thêm Bootstrap Icons (không đổi nội dung, chỉ để dùng icon khi cần) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <style>
       body {
         background-color: #eaf4f3 !important;
@@ -131,6 +134,61 @@
           max-width: 100vw;
         }
       }
+
+      /* ===================================================== */
+      /* ✅ BỔ SUNG CSS ĐỒNG BỘ/HIỆN ĐẠI HƠN — KHÔNG ĐỔI NỘI DUNG */
+      /* ===================================================== */
+
+      :root {
+        --bg: #f5f9f8;
+        --card-radius: 14px;
+        --shadow: 0 4px 15px rgba(0,0,0,0.08);
+      }
+
+      /* Nền nhẹ & animation vào .main-content (không đổi cấu trúc) */
+      body { background-color: var(--bg) !important; }
+      .main-content { animation: fadeIn .35s ease-in-out; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Card “mềm” hơn */
+      .card {
+        border-radius: var(--card-radius);
+        box-shadow: var(--shadow);
+        border: 0;
+        background: #fff;
+      }
+      .card .card-header {
+        background: #fff;
+        color: #222;
+        font-weight: 600;
+        font-size: 1.05rem;
+        padding: 12px 16px;
+        border-bottom: 1px solid #eee;
+      }
+
+      /* Stat card đồng bộ bo góc & bóng */
+      .stat-card {
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 18px 10px;
+      }
+
+      /* Bảng: header sáng, hover nhẹ */
+      .table thead th {
+        background: #f8f9fa;
+        font-weight: 600;
+        font-size: .95rem;
+      }
+      .table td, .table th {
+        font-size: .95rem;
+        transition: background-color .25s ease;
+      }
+      .table-hover tbody tr:hover {
+        background-color: #eef6ff;
+      }
     </style>
 </head>
 <body>
@@ -231,8 +289,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div><!-- /row -->
+    </div><!-- /main-content -->
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </html>
