@@ -31,7 +31,7 @@
                         <c:forEach var="d" items="${requestScope.doctors}">
                             <tr>
                                 <td>${d.doctorId}</td>
-                                <td>${d.fullName}</td>
+                                <td>${d.doctorName}</td>
                                 <td>${d.specialtyName}</td>
                                 <td>
                                     <a class="btn btn-success btn-sm"

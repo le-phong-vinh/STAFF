@@ -1,10 +1,8 @@
 <%-- 
-    Document   : sidebarStaff
+    Document   : sidebar
     Author     : Le Phong Vinh - CE181130
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%
     String currentPage = request.getServletPath();
     String query = request.getQueryString();
@@ -12,93 +10,76 @@
         currentPage += "?" + query;
     }
 %>
-
-<!-- Định nghĩa URL động -->
-<c:url var="homeURL" value="/staffHome"/>
-<c:url var="patientURL" value="/PatientsController"/>
-<c:url var="appointmentURL" value="/manageAppointment.jsp"/>
-<c:url var="invoiceURL" value="/manageInvoice"/>
-<c:url var="doctorURL" value="/DoctorsController"/>
-<c:url var="scheduleURL" value="/StaffSchedule"/>
-<c:url var="reviewURL" value="/ReviewController"/>
-<c:url var="medicineURL" value="/manageMedicine"/>
-<c:url var="diseaseURL" value="/manageDisease"/>
-<c:url var="serviceURL" value="/manageService"/>
-<c:url var="reportURL" value="/report"/>
-
-<!-- Sidebar -->
 <div class="sidebar">
     <ul>
         <li>
-            <a href="${homeURL}"
-               class="<%= currentPage.contains("staffHome.jsp") ? "active" : "" %>">
-               🏠 Trang chủ
+            <a href="staffHome.jsp"
+               class="<%= currentPage.contains("staffHome.jsp") ? "active" : ""%>">
+               Trang chủ
             </a>
         </li>
         <li>
-            <a href="${patientURL}"
-               class="<%= currentPage.contains("managePatient.jsp") ? "active" : "" %>">
-               👤 Quản lý bệnh nhân
+            <a href="PatientsController"
+               class="<%= currentPage.contains("managePatient.jsp") ? "active" : ""%>">
+               Quản lý bệnh nhân
             </a>
         </li>
         <li>
-            <a href="${appointmentURL}"
-               class="<%= currentPage.contains("manageAppointment.jsp") ? "active" : "" %>">
-               📅 Quản lý cuộc hẹn
+            <a href="manageAppointment.jsp"
+               class="<%= currentPage.contains("manageAppointment.jsp") ? "active" : ""%>">
+               Quản lý cuộc hẹn
             </a>
         </li>
         <li>
-            <a href="${invoiceURL}"
-               class="<%= currentPage.contains("manageInvoice") ? "active" : "" %>">
-               💰 Quản lý hóa đơn
+            <a href="manageInvoice"
+               class="<%= currentPage.contains("manageInvoice") ? "active" : ""%>">
+               Quản lý hóa đơn
             </a>
         </li>
         <li>
-            <a href="${doctorURL}"
-               class="<%= currentPage.contains("manageDoctor.jsp") ? "active" : "" %>">
-               🩺 Quản lý bác sĩ
+            <a href="DoctorsController"
+               class="<%= currentPage.contains("manageDoctor.jsp") ? "active" : ""%>">
+               Quản lý bác sĩ
+            </a>
+        </li> 
+         <li>
+            <a href="StaffSchedule"
+               class="<%= currentPage.contains("schedule.jsp") ? "active" : ""%>">
+               Quản lý lịch bác sĩ
             </a>
         </li>
         <li>
-            <a href="${scheduleURL}"
-               class="<%= currentPage.contains("schedule.jsp") ? "active" : "" %>">
-               🗓️ Quản lý lịch bác sĩ
+            <a href="ReviewController"
+               class="<%= currentPage.contains("manageReview.jsp") ? "active" : ""%>">
+               Hỗ trợ đánh giá
             </a>
         </li>
         <li>
-            <a href="${reviewURL}"
-               class="<%= currentPage.contains("manageReview.jsp") ? "active" : "" %>">
-               ⭐ Hỗ trợ đánh giá
+            <a href="manageMedicine"
+               class="<%= currentPage.contains("manageMedicine") ? "active" : ""%>">
+               Quản lý thuốc
             </a>
         </li>
         <li>
-            <a href="${medicineURL}"
-               class="<%= currentPage.contains("manageMedicine") ? "active" : "" %>">
-               💊 Quản lý thuốc
+            <a href="manageDisease"
+               class="<%= currentPage.contains("manageDisease") ? "active" : ""%>">
+               Quản lý bệnh
             </a>
         </li>
         <li>
-            <a href="${diseaseURL}"
-               class="<%= currentPage.contains("manageDisease") ? "active" : "" %>">
-               🧬 Quản lý tên bệnh
+            <a href="manageService"
+               class="<%= currentPage.contains("manageService") ? "active" : ""%>">
+               Quản lý dịch vụ
             </a>
         </li>
         <li>
-            <a href="${serviceURL}"
-               class="<%= currentPage.contains("manageService") ? "active" : "" %>">
-               🧾 Quản lý dịch vụ
-            </a>
-        </li>
-        <li>
-            <a href="${reportURL}"
-               class="<%= currentPage.contains("statisticAndReport") ? "active" : "" %>">
-               📊 Báo cáo doanh thu
+            <a href="report"
+               class="<%= currentPage.contains("statisticAndReport") ? "active" : ""%>">
+               Báo cáo doanh thu
             </a>
         </li>
     </ul>
 </div>
-
-<!-- CSS -->
 <style>
     .sidebar {
         width: 230px;

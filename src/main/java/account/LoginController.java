@@ -77,7 +77,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password"); //raw password
-
+System.out.println(username+" "+password);
         //DAO
         UserDAO uDAO = new UserDAO();
 

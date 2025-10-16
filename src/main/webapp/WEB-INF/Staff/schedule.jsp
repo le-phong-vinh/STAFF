@@ -287,7 +287,41 @@
             </div>
         </div>
     </div>
-    
+    <!-- Modal phân công / chi tiết lịch -->
+    <div class="modal fade" id="assignModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Phần hiển thị chi tiết lịch khi click vào tên bác sĩ -->
+                    <div id="scheduleDetails" style="display: none;">
+                        <p><b>Bác sĩ:</b> <span id="detailDoctorName"></span></p>
+                        <p><b>Phòng:</b> <span id="detailRoomName"></span></p>
+                        <p><b>Ngày:</b> <span id="detailDate"></span></p>
+                        <p><b>Ca:</b> <span id="detailShift"></span></p>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button class="btn btn-primary me-2" id="btnEditSchedule" style="display: none;">Sửa</button>
+                            <button class="btn btn-danger" id="btnDeleteSchedule" style="display: none;">Xóa</button>
+                        </div>
+                    </div>
+
+                    <!-- Phần tìm kiếm bác sĩ để phân công/chỉnh sửa -->
+                    <div id="assignDoctorForm">
+                        <p id="modalDay"></p>
+                        <p>Ca: <span id="modalShift"></span></p>
+                        <input type="hidden" id="scheduleId" value="">
+                        <input type="hidden" id="modalRoomId" value="">
+                        <input type="hidden" id="modalDoctorId" value=""> <!-- Lưu trữ doctorId tạm thời -->
+                        <input type="text" id="searchDoctor" class="form-control mb-2" placeholder="Tìm bác sĩ theo tên hoặc chuyên khoa...">
+                        <ul id="doctorResults" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -384,10 +418,13 @@
                         if (sched) {
                             let doc = allDoctors.find(d => d.id === sched.doctorId);
                             cellContent = "<b>" + (doc ? doc.name : "?") + "</b><br>" +
-                                "<button class='btn btn-sm btn-outline-secondary me-1 edit-btn' data-id='" + sched.scheduleId + "' data-doctor='" + (doc ? doc.id : "") + "' data-date='" + dateText + "' data-shift='" + shift + "' data-room='" + roomId + "'>Sửa</button>" +
-                                "<button class='btn btn-sm btn-outline-danger delete-btn' data-id='" + sched.scheduleId + "' data-room='" + roomId + "'>Xóa</button>";
+                                "<button class='btn btn-sm btn-outline-secondary me-1 edit-btn' data-id='"
+                                + sched.scheduleId + "' data-doctor='" + (doc ? doc.id : "") + "' data-date='" + dateText +
+                                "' data-shift='" + shift + "' data-room='" + roomId + "'>Sửa</button>" +
+                                "<button class='btn btn-sm btn-outline-danger delete-btn' data-id='" 
+                                + sched.scheduleId + "' data-room='" + roomId + "'>Xóa</button>";
                         } else {
-                            cellContent = "<span style='color:black;'>Chưa phân công</span><br>" +
+                            cellContent = 
                                 "<button class='btn btn-sm btn-warning assign-btn' data-date='" + dateText + "' data-shift='" + shift + "' data-room='" + roomId + "'>Phân công</button>";
                         }
                         if (shift === "Sáng") {

@@ -72,7 +72,7 @@ public class DoctorsServlet extends HttpServlet {
         DoctorDAO doctorDAO = new DoctorDAO();
 
         if (view == null || view.equalsIgnoreCase("list")) {
-            List<Doctor> list = doctorDAO.getListOFDoctor();
+            List<Doctor> list = doctorDAO.getAll();
              request.setAttribute("currentPage", "doctors");
             request.setAttribute("doctors", list);
             request.getRequestDispatcher("/WEB-INF/MainPage/doctors.jsp")
