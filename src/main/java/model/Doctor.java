@@ -24,12 +24,7 @@ public class Doctor {
     private String specialtyName;
 
     public Doctor() {}
-//      list.add(new Doctor(id, name, spec));
-    public Doctor(int doctorId, String fullName, String specialtyName){
-        this.doctorId = doctorId;
-        this.fullName = fullName;
-        this.specialtyName = specialtyName;
-    }
+
     public Doctor(int scheduleId, String shiftName, String scheduleStatus,
                   int doctorId, String licenseNumber,
                   int userId, String role, String username, String fullName, String email, String phone,

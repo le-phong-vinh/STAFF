@@ -20,7 +20,7 @@ import model.Specialty;
  *
  * @author ourki
  */
-public class DoctorDAO extends DBContext{
+public class DoctorDAO {
     // Cập nhật lịch bác sĩ
 public boolean insertSchedule(Schedule s) {
     String sql = "INSERT INTO Schedules (doctorId, roomId, date, shiftName, status) VALUES (?, ?, ?, ?, ?)";
@@ -273,31 +273,5 @@ d.printInfo();
     public List<Doctor> getAll() {
     return getAllDoctors();
 }
-    
-    public List<Doctor> getListOFDoctor() {
-        List<Doctor> list = new ArrayList<>();
-        try {
-            String sql =
-                    "SELECT d.doctorId, u.fullName, s.specialtyName \n" +
-"      FROM Doctors d \n" +
-"        JOIN Users u ON d.userId = u.userId \n" +
-"   JOIN Specialties s ON d.specialtyId = s.specialtyId";
-                    
-            
-
-            ResultSet rs = this.executeSelectQuery(sql, null);
-
-            while (rs.next()) {
-                int id = rs.getInt("doctorId");
-                String name = rs.getString("fullName");     // lấy theo alias -> không phụ thuộc tên cột gốc
-                String spec = rs.getString("specialtyName");  // có thể null nếu chưa gán chuyên khoa
-                list.add(new Doctor(id, name, spec));
-            }
-        } catch (SQLException ex) {
-            // log theo cách bạn đang dùng
-            ex.printStackTrace();
-        }
-        return list;
-    }
 
 }

@@ -63,28 +63,64 @@ public class UserDAO extends DBContext {
         return userId;
     }
 
-    public User login(String username, String password) {
-        try {
-            String query = "select * from users where username = ? and password = ? ";
-            Object[] params = {username, hashMd5(password)};
-            ResultSet rs = this.executeSelectQuery(query, params);
+ public User login(String username, String password) {
+    String hashed = hashMd5(password);
+    String sql = "SELECT * FROM Users WHERE username = ? AND password = ?";
 
-//            System.out.println("ResultSet next: " + rs.next());
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setString(1, username);
+        ps.setString(2, hashed);
+
+        try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                System.out.println(rs.getInt(1) + "Username: " + rs.getString(2));
-                System.out.println(password);
-                System.out.println(rs.getString("password"));
-//                System.out.println("Password: " + rs.getString(3));
-//                System.out.println("Hashed: " + hashMd5(password));
+                int userId = rs.getInt("userId");
+                String fullName = rs.getString("fullName");
+                String role = rs.getString("role");
 
-                return new User(rs.getInt(1), rs.getString(2), null, rs.getString("role"));
+                System.out.println("✅ Login success for: " + username);
+                return new User(userId, username, fullName, role);
+            } else {
+                System.out.println("❌ Login failed: invalid username or password.");
             }
-        } catch (Exception e) {
-            System.out.println("error");
         }
-        return null;
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("⚠️ Database error during login.");
     }
 
+    return null;
+}
+
+ ///
+// public User login(String username, String password) {
+//    String hashed = hashMd5(password);
+//    String sql =  "SELECT * FROM Users WHERE username = ? AND password = ?";
+//    boolean success = false;
+//
+//    try (Connection conn = new DBContext().getConnection();
+//         PreparedStatement ps = conn.prepareStatement(sql)) {
+//
+//       ps.setString(1, username);
+//        ps.setString(2, hashed);
+//
+//          ResultSet rs = ps.executeQuery();
+//
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//    }
+//
+//
+//    return null;
+//}
+// 
+ 
+ 
+ 
+ 
+ 
     public User findById(int id) {
         User user = null;
         try {

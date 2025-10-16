@@ -60,46 +60,30 @@ public class ReportServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    try {
-        ReportDAO dao = new ReportDAO();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        // --- Lấy parameter lọc ---
-        String serviceName = request.getParameter("serviceName");
-        String diseaseName = request.getParameter("diseaseName");
+        try {
+            ReportDAO dao = new ReportDAO();
 
-        // --- 4 thống kê nhanh ---
-        request.setAttribute("revToday", dao.getRevenueToday());
-        request.setAttribute("revWeek", dao.getRevenueThisWeek());
-        request.setAttribute("revMonth", dao.getRevenueThisMonth());
-        request.setAttribute("revYear", dao.getRevenueThisYear());
+            // 4 thống kê nhanh
+            request.setAttribute("revToday", dao.getRevenueToday());
+            request.setAttribute("revWeek", dao.getRevenueThisWeek());
+            request.setAttribute("revMonth", dao.getRevenueThisMonth());
+            request.setAttribute("revYear", dao.getRevenueThisYear());
 
-        // --- Doanh thu theo dịch vụ (có lọc nếu nhập tên) ---
-        if (serviceName != null && !serviceName.trim().isEmpty()) {
-            request.setAttribute("serviceRevenue", dao.getRevenueByServiceName(serviceName.trim()));
-        } else {
+            // doanh thu theo dịch vụ
             request.setAttribute("serviceRevenue", dao.getRevenueByService());
-        }
 
-        // --- Thống kê bệnh nhân theo loại bệnh (có lọc nếu nhập tên) ---
-        if (diseaseName != null && !diseaseName.trim().isEmpty()) {
-            request.setAttribute("diseaseStats", dao.getPatientsByDiseaseName(diseaseName.trim()));
-        } else {
+            // thống kê bệnh nhân theo loại bệnh
             request.setAttribute("diseaseStats", dao.getPatientsByDisease());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        // Giữ lại giá trị đã nhập để hiện trong ô tìm kiếm
-        request.setAttribute("serviceName", serviceName);
-        request.setAttribute("diseaseName", diseaseName);
-
-    } catch (Exception e) {
-        e.printStackTrace();
+        request.getRequestDispatcher("/WEB-INF/Staff/statisticAndReport.jsp").forward(request, response);
     }
-
-    request.getRequestDispatcher("/WEB-INF/Staff/statisticAndReport.jsp").forward(request, response);
-}
-
 
     /**
      * Handles the HTTP <code>POST</code> method.
