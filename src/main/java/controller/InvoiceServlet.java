@@ -69,72 +69,71 @@ public class InvoiceServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-    String action = request.getParameter("action");
-    String idStr = request.getParameter("invoiceId");
-    Integer id = null;
+        String action = request.getParameter("action");
+        String idStr = request.getParameter("invoiceId");
+        Integer id = null;
 
-    try {
-        if (idStr != null && !idStr.trim().isEmpty()) {
-            id = Integer.parseInt(idStr);
-        }
-    } catch (NumberFormatException e) {
-        // Nếu id lỗi, quay về danh sách
-        response.sendRedirect("manageInvoice");
-        return;
-    }
-
-    // --- Xem chi tiết ---
-    if ("detail".equals(action) && id != null) {
-        dao.updateInvoiceTotal(id); // Cập nhật tổng tiền trước khi xem
-        Invoice invoice = dao.getById(id);
-        List<InvoiceDetail> details = dao.getInvoiceDetails(id);
-
-        request.setAttribute("selectedInvoice", invoice);
-        request.setAttribute("details", details);
-
-    // --- Thanh toán (chuyển sang POST rồi, GET chỉ redirect nếu có lỗi) ---
-    } else if ("pay".equals(action)) {
-        response.sendRedirect("manageInvoice"); 
-        return;
-
-    // --- In / Hiển thị hóa đơn (dạng JSP in PDF) ---
-    } else if ("print".equals(action) && id != null) {
-        Invoice invoice = dao.getById(id);
-        List<InvoiceDetail> details = dao.getInvoiceDetails(id);
-
-        if (invoice != null) {
-            request.setAttribute("invoice", invoice);
-            request.setAttribute("details", details);
-            request.getRequestDispatcher("/WEB-INF/Staff/invoicePrint.jsp").forward(request, response);
-            return;
-        } else {
+        try {
+            if (idStr != null && !idStr.trim().isEmpty()) {
+                id = Integer.parseInt(idStr);
+            }
+        } catch (NumberFormatException e) {
+            // Nếu id lỗi, quay về danh sách
             response.sendRedirect("manageInvoice");
             return;
         }
 
-    }
+        // --- Xem chi tiết ---
+        if ("detail".equals(action) && id != null) {
+            dao.updateInvoiceTotal(id); // Cập nhật tổng tiền trước khi xem
+            Invoice invoice = dao.getById(id);
+            List<InvoiceDetail> details = dao.getInvoiceDetails(id);
 
-    // --- Tìm kiếm hoặc hiển thị danh sách ---
-    String keyword = request.getParameter("keyword");
-    List<Invoice> list;
-    if (keyword != null && !keyword.trim().isEmpty()) {
-        list = dao.searchInvoices(keyword);
-    } else {
-        list = dao.getAll();
-        for (Invoice inv : list) {
-            dao.updateInvoiceTotal(inv.getInvoiceId());
+            request.setAttribute("selectedInvoice", invoice);
+            request.setAttribute("details", details);
+
+            // --- Thanh toán (chuyển sang POST rồi, GET chỉ redirect nếu có lỗi) ---
+        } else if ("pay".equals(action)) {
+            response.sendRedirect("manageInvoice");
+            return;
+
+            // --- In / Hiển thị hóa đơn (dạng JSP in PDF) ---
+        } else if ("print".equals(action) && id != null) {
+            Invoice invoice = dao.getById(id);
+            List<InvoiceDetail> details = dao.getInvoiceDetails(id);
+
+            if (invoice != null) {
+                request.setAttribute("invoice", invoice);
+                request.setAttribute("details", details);
+                request.getRequestDispatcher("/WEB-INF/Staff/invoicePrint.jsp").forward(request, response);
+                return;
+            } else {
+                response.sendRedirect("manageInvoice");
+                return;
+            }
+
         }
-        list = dao.getAll(); // reload sau cập nhật
+
+        // --- Tìm kiếm hoặc hiển thị danh sách ---
+        String keyword = request.getParameter("keyword");
+        List<Invoice> list;
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            list = dao.searchInvoices(keyword);
+        } else {
+            list = dao.getAll();
+            for (Invoice inv : list) {
+                dao.updateInvoiceTotal(inv.getInvoiceId());
+            }
+            list = dao.getAll(); // reload sau cập nhật
+        }
+
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("/WEB-INF/Staff/manageInvoice.jsp").forward(request, response);
     }
-
-    request.setAttribute("list", list);
-    request.getRequestDispatcher("/WEB-INF/Staff/manageInvoice.jsp").forward(request, response);
-}
-
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -144,7 +143,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   @Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -170,9 +169,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
                 response.sendRedirect("manageInvoice?error=invalid_id");
                 return;
             }
-        }
-
-        // ✅ Các action khác (nếu có)
+        } // ✅ Các action khác (nếu có)
         else if ("updateStatus".equals(action)) {
             try {
                 int id = Integer.parseInt(request.getParameter("invoiceId"));

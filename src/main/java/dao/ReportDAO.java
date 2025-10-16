@@ -96,4 +96,54 @@ public class ReportDAO {
         }
         return list;
     }
+    
+    // ================== Lọc theo tên dịch vụ ==================
+public List<Map<String, Object>> getRevenueByServiceName(String serviceName) {
+    List<Map<String, Object>> list = new ArrayList<>();
+    String sql = "SELECT s.serviceName, COUNT(a.id) AS totalBookings, " +
+                 "SUM(s.price * a.quantity) AS revenue " +
+                 "FROM AppointmentServices a " +
+                 "JOIN Services s ON a.serviceId = s.serviceId " +
+                 "JOIN Invoices i ON i.appointmentId = a.appointmentId " +
+                 "WHERE i.status = 1 AND s.serviceName LIKE ? " +
+                 "GROUP BY s.serviceName";
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, "%" + serviceName + "%");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Map<String, Object> row = new HashMap<>();
+            row.put("serviceName", rs.getString("serviceName"));
+            row.put("count", rs.getInt("totalBookings"));
+            row.put("revenue", rs.getBigDecimal("revenue"));
+            list.add(row);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
+// ================== Lọc theo tên bệnh ==================
+public List<Map<String, Object>> getPatientsByDiseaseName(String diseaseName) {
+    List<Map<String, Object>> list = new ArrayList<>();
+    String sql = "SELECT d.diseaseName, COUNT(er.resultId) AS totalPatients " +
+                 "FROM Examination_Result er " +
+                 "JOIN Diseases d ON er.diseaseId = d.diseaseId " +
+                 "WHERE d.diseaseName LIKE ? " +
+                 "GROUP BY d.diseaseName";
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, "%" + diseaseName + "%");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Map<String, Object> row = new HashMap<>();
+            row.put("diseaseName", rs.getString("diseaseName"));
+            row.put("count", rs.getInt("totalPatients"));
+            list.add(row);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
 }
